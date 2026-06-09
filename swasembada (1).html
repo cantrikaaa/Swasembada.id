@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swasembada.id – Ketahanan Pangan Indonesia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green-50:#f0fdf4;--green-100:#dcfce7;--green-200:#bbf7d0;--green-400:#4ade80;
+  --green-500:#22c55e;--green-600:#16a34a;--green-700:#15803d;--green-800:#166534;
+  --green-900:#14532d;
+  --earth-50:#fefce8;--earth-100:#fef9c3;--earth-400:#facc15;--earth-500:#eab308;
+  --red-400:#f87171;--red-500:#ef4444;--red-600:#dc2626;
+  --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;
+  --gray-400:#9ca3af;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;
+  --gray-800:#1f2937;--gray-900:#111827;
+  --white:#ffffff;
+  --radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:24px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 16px rgba(0,0,0,.10);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.14);
+}
+body{font-family:'Inter',sans-serif;background:#f7f8f5;color:var(--gray-900);min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4,h5{font-family:'Plus Jakarta Sans',sans-serif}
+.hidden{display:none!important}
+
+/* ─── MODAL OVERLAY ─── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;animation:fadeIn .2s ease}
+.modal-box{background:var(--white);border-radius:var(--radius-xl);width:100%;max-width:440px;padding:2.5rem;box-shadow:var(--shadow-lg);animation:slideUp .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-logo{display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem}
+.modal-logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--green-600),var(--green-400));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;color:white}
+.modal-logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.2rem;color:var(--green-800)}
+.modal-box h2{font-size:1.4rem;font-weight:700;margin-bottom:.3rem;color:var(--gray-900)}
+.modal-box p.sub{font-size:.875rem;color:var(--gray-500);margin-bottom:1.5rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.813rem;font-weight:500;color:var(--gray-700);margin-bottom:.35rem}
+.form-group input{width:100%;padding:.65rem .9rem;border:1.5px solid var(--gray-200);border-radius:var(--radius-md);font-size:.9rem;font-family:'Inter',sans-serif;transition:border-color .2s;background:var(--gray-50)}
+.form-group input:focus{outline:none;border-color:var(--green-500);background:white}
+.form-group input.error{border-color:var(--red-500)}
+.form-error{font-size:.78rem;color:var(--red-600);margin-top:.25rem}
+.btn-primary{width:100%;padding:.75rem;background:var(--green-600);color:white;border:none;border-radius:var(--radius-md);font-size:.9rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:background .2s,transform .1s}
+.btn-primary:hover{background:var(--green-700)}
+.btn-primary:active{transform:scale(.98)}
+.modal-switch{text-align:center;margin-top:1rem;font-size:.85rem;color:var(--gray-500)}
+.modal-switch a{color:var(--green-700);font-weight:500;cursor:pointer;text-decoration:none}
+.modal-switch a:hover{text-decoration:underline}
+.divider{display:flex;align-items:center;gap:.75rem;margin:1.2rem 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--gray-200)}
+.divider span{font-size:.78rem;color:var(--gray-400)}
+.social-btn{width:100%;padding:.65rem;border:1.5px solid var(--gray-200);border-radius:var(--radius-md);background:white;font-size:.875rem;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.6rem;color:var(--gray-700);transition:border-color .2s,background .2s;margin-bottom:.6rem}
+.social-btn:hover{border-color:var(--gray-400);background:var(--gray-50)}
+.alert{padding:.7rem 1rem;border-radius:var(--radius-md);font-size:.85rem;margin-bottom:1rem}
+.alert-success{background:var(--green-50);border:1px solid var(--green-200);color:var(--green-800)}
+.alert-error{background:#fef2f2;border:1px solid #fecaca;color:var(--red-600)}
+
+/* ─── NAVBAR ─── */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-200);padding:.75rem 1.5rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.nav-logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--green-600),var(--green-400));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;color:white}
+.nav-logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;color:var(--green-800)}
+.nav-links{display:flex;align-items:center;gap:.25rem}
+.nav-link{padding:.45rem .8rem;border-radius:var(--radius-sm);font-size:.875rem;font-weight:500;color:var(--gray-600);cursor:pointer;transition:all .2s;text-decoration:none;border:none;background:none}
+.nav-link:hover,.nav-link.active{color:var(--green-700);background:var(--green-50)}
+.nav-actions{display:flex;align-items:center;gap:.6rem}
+.btn-nav-outline{padding:.45rem 1rem;border:1.5px solid var(--gray-300);border-radius:var(--radius-md);font-size:.85rem;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;background:white;color:var(--gray-700);transition:all .2s}
+.btn-nav-outline:hover{border-color:var(--green-500);color:var(--green-700)}
+.btn-nav-fill{padding:.45rem 1rem;border:none;background:var(--green-600);color:white;border-radius:var(--radius-md);font-size:.85rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:background .2s}
+.btn-nav-fill:hover{background:var(--green-700)}
+.user-menu{display:flex;align-items:center;gap:.5rem;cursor:pointer;padding:.3rem .6rem;border-radius:var(--radius-md);transition:background .2s}
+.user-menu:hover{background:var(--gray-100)}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:var(--green-600);color:white;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600}
+.user-name{font-size:.875rem;font-weight:500;color:var(--gray-700)}
+.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);min-width:180px;padding:.5rem;z-index:200}
+.user-dropdown a{display:flex;align-items:center;gap:.6rem;padding:.55rem .8rem;border-radius:var(--radius-sm);font-size:.875rem;color:var(--gray-700);cursor:pointer;transition:background .2s;text-decoration:none}
+.user-dropdown a:hover{background:var(--gray-50);color:var(--gray-900)}
+.user-dropdown a.danger{color:var(--red-600)}
+.user-dropdown a.danger:hover{background:#fef2f2}
+.user-dropdown hr{border:none;border-top:1px solid var(--gray-100);margin:.4rem 0}
+.user-menu-wrap{position:relative}
+
+/* ─── PAGES ─── */
+.page{display:none;animation:fadeIn .3s ease}
+.page.active{display:block}
+
+/* ─── HERO ─── */
+.hero{background:linear-gradient(160deg,#0a3d0f 0%,#1a5c22 40%,#217a2e 70%,#2d9e3a 100%);min-height:90vh;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-content{max-width:1200px;margin:0 auto;padding:5rem 1.5rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;flex:1}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:100px;padding:.35rem .9rem;font-size:.78rem;color:rgba(255,255,255,.9);margin-bottom:1.5rem;width:fit-content}
+.hero-badge i{font-size:.75rem;color:var(--green-400)}
+.hero h1{font-size:3rem;font-weight:800;line-height:1.15;color:white;margin-bottom:1.2rem}
+.hero h1 span{color:var(--green-400)}
+.hero p{font-size:1.05rem;color:rgba(255,255,255,.75);line-height:1.75;margin-bottom:2rem;max-width:480px}
+.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-hero-primary{padding:.8rem 1.8rem;background:var(--green-400);color:var(--green-900);border:none;border-radius:var(--radius-md);font-size:.9rem;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:all .2s}
+.btn-hero-primary:hover{background:white;transform:translateY(-2px)}
+.btn-hero-outline{padding:.8rem 1.8rem;background:transparent;color:white;border:1.5px solid rgba(255,255,255,.4);border-radius:var(--radius-md);font-size:.9rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:all .2s}
+.btn-hero-outline:hover{border-color:white;background:rgba(255,255,255,.1)}
+.hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2rem}
+.hero-stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-lg);padding:1.2rem 1.4rem}
+.hero-stat-num{font-size:1.8rem;font-weight:800;color:var(--green-400);font-family:'Plus Jakarta Sans',sans-serif}
+.hero-stat-label{font-size:.8rem;color:rgba(255,255,255,.65);margin-top:.2rem}
+.hero-right{position:relative}
+.hero-card{background:rgba(255,255,255,.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.18);border-radius:var(--radius-xl);padding:1.5rem;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
+.hero-card-title{font-size:.8rem;font-weight:600;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.05em}
+.live-badge{display:flex;align-items:center;gap:.35rem;font-size:.72rem;color:#4ade80;font-weight:500}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+.price-list{display:flex;flex-direction:column;gap:.7rem}
+.price-item{display:flex;align-items:center;justify-content:space-between}
+.price-item-left{display:flex;align-items:center;gap:.6rem}
+.price-icon{font-size:1.1rem}
+.price-name{font-size:.875rem;color:rgba(255,255,255,.85);font-weight:500}
+.price-val{font-size:.9rem;font-weight:700;color:white}
+.price-change{font-size:.72rem;padding:.15rem .4rem;border-radius:4px;font-weight:600}
+.price-up{background:rgba(74,222,128,.2);color:#4ade80}
+.price-down{background:rgba(248,113,113,.2);color:#f87171}
+.price-stable{background:rgba(255,255,255,.12);color:rgba(255,255,255,.6)}
+.hero-wave{position:absolute;bottom:0;left:0;right:0}
+
+/* ─── SECTIONS ─── */
+.section{max-width:1200px;margin:0 auto;padding:4rem 1.5rem}
+.section-label{font-size:.75rem;font-weight:600;color:var(--green-600);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.6rem}
+.section-title{font-size:2rem;font-weight:800;color:var(--gray-900);margin-bottom:.75rem;line-height:1.25}
+.section-sub{font-size:1rem;color:var(--gray-500);max-width:540px;line-height:1.7}
+
+/* ─── PRICE TABLE ─── */
+.price-section{background:white;border-radius:var(--radius-xl);box-shadow:var(--shadow-md);overflow:hidden;margin-top:2.5rem}
+.price-section-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between;flex-wrap:gap}
+.price-section-header h3{font-size:.95rem;font-weight:700;color:var(--gray-800)}
+.price-updated{font-size:.78rem;color:var(--gray-400)}
+.price-table{width:100%;border-collapse:collapse}
+.price-table th{padding:.75rem 1.2rem;font-size:.75rem;font-weight:600;color:var(--gray-500);text-align:left;background:var(--gray-50);border-bottom:1px solid var(--gray-200)}
+.price-table td{padding:.85rem 1.2rem;font-size:.9rem;border-bottom:1px solid var(--gray-100)}
+.price-table tr:last-child td{border-bottom:none}
+.price-table tr:hover td{background:var(--green-50)}
+.commodity-cell{display:flex;align-items:center;gap:.75rem}
+.commodity-emoji{font-size:1.3rem}
+.commodity-name{font-weight:500;color:var(--gray-800)}
+.commodity-unit{font-size:.78rem;color:var(--gray-400)}
+.price-cell{font-weight:600;color:var(--gray-900)}
+.change-badge{display:inline-flex;align-items:center;gap:.2rem;padding:.2rem .5rem;border-radius:20px;font-size:.78rem;font-weight:600}
+.change-up{background:#dcfce7;color:#16a34a}
+.change-down{background:#fee2e2;color:#dc2626}
+.change-neutral{background:var(--gray-100);color:var(--gray-500)}
+.trend-bar{height:4px;background:var(--gray-200);border-radius:2px;width:80px;overflow:hidden}
+.trend-fill{height:100%;border-radius:2px;background:var(--green-500)}
+.search-bar{display:flex;align-items:center;gap:.6rem;padding:.5rem 1rem;border:1.5px solid var(--gray-200);border-radius:var(--radius-md);background:var(--gray-50);font-size:.875rem;max-width:240px}
+.search-bar input{border:none;background:transparent;font-family:'Inter',sans-serif;font-size:.875rem;color:var(--gray-700);outline:none;width:100%}
+.search-bar input::placeholder{color:var(--gray-400)}
+.search-bar i{color:var(--gray-400);font-size:.85rem}
+
+/* ─── MAP SECTION ─── */
+.map-section{background:white;border-radius:var(--radius-xl);box-shadow:var(--shadow-md);overflow:hidden;margin-top:2.5rem}
+.map-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between}
+.map-header h3{font-size:.95rem;font-weight:700;color:var(--gray-800)}
+.map-legend{display:flex;align-items:center;gap:1rem;font-size:.78rem;color:var(--gray-500)}
+.legend-item{display:flex;align-items:center;gap:.35rem}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+.map-body{display:grid;grid-template-columns:3fr 1fr;min-height:300px}
+.map-visual{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);position:relative;min-height:300px;display:flex;align-items:center;justify-content:center}
+.map-svg{width:100%;max-width:400px}
+.map-stats{padding:1.5rem;border-left:1px solid var(--gray-100)}
+.map-stat-item{margin-bottom:1.25rem}
+.map-stat-num{font-size:1.6rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif}
+.map-stat-num.green{color:var(--green-600)}
+.map-stat-num.yellow{color:#b45309}
+.map-stat-num.red{color:var(--red-600)}
+.map-stat-label{font-size:.8rem;color:var(--gray-500);margin-top:.1rem}
+.map-stat-bar{height:6px;background:var(--gray-100);border-radius:3px;margin-top:.5rem;overflow:hidden}
+.map-stat-fill{height:100%;border-radius:3px}
+
+/* ─── CARDS ─── */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-top:2.5rem}
+.card{background:white;border-radius:var(--radius-lg);border:1px solid var(--gray-200);padding:1.5rem;transition:all .25s;cursor:pointer}
+.card:hover{border-color:var(--green-400);box-shadow:0 4px 20px rgba(22,163,74,.12);transform:translateY(-2px)}
+.card-icon{width:44px;height:44px;border-radius:var(--radius-md);background:var(--green-50);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1rem}
+.card h4{font-size:1rem;font-weight:700;color:var(--gray-800);margin-bottom:.4rem}
+.card p{font-size:.875rem;color:var(--gray-500);line-height:1.65}
+.card-link{display:inline-flex;align-items:center;gap:.3rem;font-size:.82rem;font-weight:600;color:var(--green-700);margin-top:.75rem;cursor:pointer}
+.card-link:hover{gap:.5rem}
+
+/* ─── TICKER ─── */
+.ticker-wrap{background:var(--green-900);padding:.55rem 0;overflow:hidden;position:relative}
+.ticker-content{display:flex;gap:3rem;animation:ticker 40s linear infinite;white-space:nowrap}
+.ticker-item{display:flex;align-items:center;gap:.6rem;font-size:.82rem;color:rgba(255,255,255,.8)}
+.ticker-item span{font-weight:600;color:white}
+.ticker-change.up{color:var(--green-400)}
+.ticker-change.down{color:var(--red-400)}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ─── DASHBOARD ─── */
+.dashboard{max-width:1200px;margin:0 auto;padding:2rem 1.5rem}
+.dashboard-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.dashboard-title{font-size:1.5rem;font-weight:800;color:var(--gray-900)}
+.dashboard-sub{font-size:.875rem;color:var(--gray-500);margin-top:.2rem}
+.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.dash-stat{background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:1.2rem 1.4rem}
+.dash-stat-label{font-size:.75rem;font-weight:500;color:var(--gray-500);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.04em}
+.dash-stat-val{font-size:1.8rem;font-weight:800;color:var(--gray-900);font-family:'Plus Jakarta Sans',sans-serif}
+.dash-stat-change{font-size:.8rem;margin-top:.3rem}
+.dash-stat-change.up{color:var(--green-600)}
+.dash-stat-change.down{color:var(--red-600)}
+.dash-grid{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;margin-top:1.5rem}
+.dash-panel{background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:1.4rem}
+.dash-panel h3{font-size:.95rem;font-weight:700;color:var(--gray-800);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between}
+.dash-panel h3 span{font-size:.78rem;font-weight:400;color:var(--gray-400)}
+.chart-area{height:180px;background:linear-gradient(180deg,#f0fdf4 0%,transparent 100%);border-radius:var(--radius-md);position:relative;display:flex;align-items:flex-end;padding:.5rem;gap:.3rem;overflow:hidden}
+.chart-bar{flex:1;border-radius:4px 4px 0 0;background:var(--green-400);opacity:.7;transition:opacity .2s}
+.chart-bar:hover{opacity:1}
+.chart-bar.active{background:var(--green-600);opacity:1}
+.chart-line-svg{position:absolute;inset:0;width:100%;height:100%}
+.watchlist{display:flex;flex-direction:column;gap:.6rem}
+.watch-item{display:flex;align-items:center;justify-content:space-between;padding:.65rem .75rem;border-radius:var(--radius-md);border:1px solid var(--gray-100);cursor:pointer;transition:all .2s}
+.watch-item:hover{background:var(--green-50);border-color:var(--green-200)}
+.watch-name{font-size:.875rem;font-weight:500;color:var(--gray-800)}
+.watch-price{font-size:.875rem;font-weight:700;color:var(--gray-900)}
+.watch-chg{font-size:.75rem;font-weight:600;padding:.1rem .4rem;border-radius:4px}
+.watch-chg.up{background:#dcfce7;color:var(--green-700)}
+.watch-chg.down{background:#fee2e2;color:var(--red-700)}
+.add-watch-btn{width:100%;margin-top:.75rem;padding:.6rem;border:1.5px dashed var(--gray-300);border-radius:var(--radius-md);background:transparent;font-size:.85rem;color:var(--gray-500);cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.add-watch-btn:hover{border-color:var(--green-400);color:var(--green-700);background:var(--green-50)}
+.news-list{display:flex;flex-direction:column;gap:.75rem}
+.news-item{display:flex;gap:.75rem;padding:.75rem;border-radius:var(--radius-md);cursor:pointer;transition:background .2s}
+.news-item:hover{background:var(--gray-50)}
+.news-dot{width:8px;height:8px;border-radius:50%;background:var(--green-500);flex-shrink:0;margin-top:.4rem}
+.news-title{font-size:.875rem;font-weight:500;color:var(--gray-800);line-height:1.5}
+.news-meta{font-size:.75rem;color:var(--gray-400);margin-top:.2rem}
+.tab-row{display:flex;gap:.25rem;border-bottom:1px solid var(--gray-200);margin-bottom:1.25rem}
+.tab-btn{padding:.5rem .9rem;font-size:.85rem;font-weight:500;color:var(--gray-500);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s}
+.tab-btn.active{color:var(--green-700);border-bottom-color:var(--green-600)}
+
+/* ─── KOMODITAS ─── */
+.komoditas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1.5rem}
+.komoditas-card{background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:1.2rem;text-align:center;cursor:pointer;transition:all .25s}
+.komoditas-card:hover{border-color:var(--green-400);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.komoditas-card.selected{border-color:var(--green-500);background:var(--green-50)}
+.komoditas-emoji{font-size:2.5rem;margin-bottom:.6rem}
+.komoditas-name{font-size:.9rem;font-weight:600;color:var(--gray-800);margin-bottom:.3rem}
+.komoditas-price{font-size:1rem;font-weight:700;color:var(--green-700)}
+.komoditas-change{font-size:.78rem;margin-top:.2rem}
+.komoditas-detail{background:white;border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:2rem;margin-top:1.5rem}
+.kd-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem}
+.kd-name{font-size:1.4rem;font-weight:800;color:var(--gray-900)}
+.kd-price{font-size:2rem;font-weight:800;color:var(--green-700);font-family:'Plus Jakarta Sans',sans-serif}
+.kd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+.kd-stat{background:var(--gray-50);border-radius:var(--radius-md);padding:1rem}
+.kd-stat-label{font-size:.75rem;color:var(--gray-500);margin-bottom:.25rem}
+.kd-stat-val{font-size:1.1rem;font-weight:700;color:var(--gray-900)}
+
+/* ─── FOOTER ─── */
+footer{background:var(--gray-900);color:var(--gray-400);padding:3rem 1.5rem 2rem}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
+.footer-brand{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800;color:white;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.footer-brand-icon{width:28px;height:28px;background:var(--green-500);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.footer-desc{font-size:.875rem;line-height:1.7}
+.footer-col h4{font-size:.85rem;font-weight:600;color:white;margin-bottom:.75rem}
+.footer-col a{display:block;font-size:.85rem;color:var(--gray-400);text-decoration:none;margin-bottom:.4rem;transition:color .2s;cursor:pointer}
+.footer-col a:hover{color:var(--green-400)}
+.footer-bottom{border-top:1px solid var(--gray-800);padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;font-size:.8rem;flex-wrap:wrap;gap:.75rem}
+.footer-social{display:flex;gap:.6rem}
+.footer-social a{width:34px;height:34px;border-radius:50%;background:var(--gray-800);display:flex;align-items:center;justify-content:center;color:var(--gray-400);font-size:.85rem;cursor:pointer;transition:all .2s;text-decoration:none}
+.footer-social a:hover{background:var(--green-700);color:white}
+
+/* ─── ALERT/TOAST ─── */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--gray-900);color:white;padding:.85rem 1.25rem;border-radius:var(--radius-lg);font-size:.875rem;box-shadow:var(--shadow-lg);z-index:2000;display:flex;align-items:center;gap:.6rem;animation:slideInRight .3s ease;max-width:320px}
+.toast i{color:var(--green-400)}
+.toast.error i{color:var(--red-400)}
+@keyframes slideInRight{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+.toast.fadeOut{animation:fadeOut .3s ease forwards}
+@keyframes fadeOut{to{opacity:0;transform:translateX(100%)}}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;padding-top:3rem}
+  .hero-right{display:none}
+  .dash-stats{grid-template-columns:repeat(2,1fr)}
+  .dash-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .map-body{grid-template-columns:1fr}
+  .kd-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .hero h1{font-size:2rem}
+  .nav-links{display:none}
+  .dash-stats{grid-template-columns:1fr 1fr}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr}
+}
+.progress-bar{height:4px;background:var(--green-500);border-radius:2px;transition:width .3s}
+.skeleton{background:linear-gradient(90deg,var(--gray-100) 25%,var(--gray-200) 50%,var(--gray-100) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:4px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+</style>
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- ─── LOGIN MODAL ─── -->
+<div class="modal-overlay hidden" id="modal-auth">
+  <div class="modal-box" id="modal-box">
+    <div class="modal-logo">
+      <div class="modal-logo-icon">🌾</div>
+      <span class="modal-logo-text">Swasembada.id</span>
+    </div>
+    <!-- LOGIN -->
+    <div id="form-login">
+      <h2>Selamat datang kembali</h2>
+      <p class="sub">Masuk ke akun Swasembada.id Anda</p>
+      <div id="login-alert" class="hidden"></div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="nama@email.com">
+        <div class="form-error hidden" id="login-email-err"></div>
+      </div>
+      <div class="form-group">
+        <label>Kata sandi</label>
+        <input type="password" id="login-pass" placeholder="Kata sandi Anda">
+        <div class="form-error hidden" id="login-pass-err"></div>
+      </div>
+      <button class="btn-primary" onclick="doLogin()">Masuk</button>
+      <div class="divider"><span>atau</span></div>
+      <button class="social-btn" onclick="demoLogin()"><i class="fa-solid fa-bolt" style="color:#16a34a"></i> Masuk sebagai Demo User</button>
+      <div class="modal-switch">Belum punya akun? <a onclick="switchToRegister()">Daftar sekarang</a></div>
+    </div>
+    <!-- REGISTER -->
+    <div id="form-register" class="hidden">
+      <h2>Buat akun baru</h2>
+      <p class="sub">Daftar gratis dan pantau pangan Indonesia</p>
+      <div id="register-alert" class="hidden"></div>
+      <div class="form-group">
+        <label>Nama lengkap</label>
+        <input type="text" id="reg-name" placeholder="Nama Anda">
+        <div class="form-error hidden" id="reg-name-err"></div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="reg-email" placeholder="nama@email.com">
+        <div class="form-error hidden" id="reg-email-err"></div>
+      </div>
+      <div class="form-group">
+        <label>Kata sandi</label>
+        <input type="password" id="reg-pass" placeholder="Min. 8 karakter">
+        <div class="form-error hidden" id="reg-pass-err"></div>
+      </div>
+      <div class="form-group">
+        <label>Peran</label>
+        <select id="reg-role" style="width:100%;padding:.65rem .9rem;border:1.5px solid var(--gray-200);border-radius:10px;font-size:.9rem;font-family:inherit;background:var(--gray-50);color:var(--gray-700)">
+          <option value="">Pilih peran</option>
+          <option value="petani">🌾 Petani</option>
+          <option value="pedagang">🏪 Pedagang/Distributor</option>
+          <option value="peneliti">🔬 Peneliti/Akademisi</option>
+          <option value="kebijakan">🏛️ Pembuat Kebijakan</option>
+          <option value="umum">👤 Masyarakat Umum</option>
+        </select>
+      </div>
+      <button class="btn-primary" onclick="doRegister()">Daftar sekarang</button>
+      <div class="modal-switch">Sudah punya akun? <a onclick="switchToLogin()">Masuk</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── NAVBAR ─── -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" onclick="showPage('home')">
+      <div class="nav-logo-icon">🌾</div>
+      <span class="nav-logo-text">Swasembada.id</span>
+    </a>
+    <div class="nav-links">
+      <button class="nav-link active" id="nav-beranda" onclick="showPage('home');setActiveNav('nav-beranda')">Beranda</button>
+      <button class="nav-link" id="nav-harga" onclick="showPage('harga');setActiveNav('nav-harga')">Harga Pangan</button>
+      <button class="nav-link" id="nav-komoditas" onclick="showPage('komoditas');setActiveNav('nav-komoditas')">Komoditas</button>
+      <button class="nav-link" id="nav-peta" onclick="showPage('peta');setActiveNav('nav-peta')">Peta Ketahanan</button>
+    </div>
+    <div class="nav-actions" id="nav-guest">
+      <button class="btn-nav-outline" onclick="openModal('login')">Masuk</button>
+      <button class="btn-nav-fill" onclick="openModal('register')">Daftar Gratis</button>
+    </div>
+    <div class="nav-actions hidden" id="nav-user">
+      <div class="user-menu-wrap">
+        <div class="user-menu" onclick="toggleUserMenu()">
+          <div class="user-avatar" id="user-avatar-nav">A</div>
+          <span class="user-name" id="user-name-nav">Pengguna</span>
+          <i class="fa-solid fa-chevron-down" style="font-size:.65rem;color:var(--gray-400)"></i>
+        </div>
+        <div class="user-dropdown hidden" id="user-dropdown">
+          <a onclick="showPage('dashboard');toggleUserMenu()"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+          <a onclick="toggleUserMenu()"><i class="fa-solid fa-bookmark"></i> Watchlist</a>
+          <a onclick="toggleUserMenu()"><i class="fa-solid fa-gear"></i> Pengaturan</a>
+          <hr>
+          <a class="danger" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── TICKER ─── -->
+<div class="ticker-wrap">
+  <div class="ticker-content" id="ticker">
+    <div class="ticker-item">🌾 <span>Beras</span> Rp13.500/kg <span class="ticker-change up">▲1.2%</span></div>
+    <div class="ticker-item">🌽 <span>Jagung</span> Rp5.200/kg <span class="ticker-change">●</span></div>
+    <div class="ticker-item">🫘 <span>Kedelai</span> Rp9.800/kg <span class="ticker-change down">▼0.5%</span></div>
+    <div class="ticker-item">🧅 <span>Bawang Merah</span> Rp28.000/kg <span class="ticker-change up">▲3.7%</span></div>
+    <div class="ticker-item">🧄 <span>Bawang Putih</span> Rp36.000/kg <span class="ticker-change">●</span></div>
+    <div class="ticker-item">🌶️ <span>Cabai Merah</span> Rp42.000/kg <span class="ticker-change down">▼2.1%</span></div>
+    <div class="ticker-item">🥚 <span>Telur Ayam</span> Rp28.500/kg <span class="ticker-change up">▲0.8%</span></div>
+    <div class="ticker-item">🫙 <span>Minyak Goreng</span> Rp17.000/ltr <span class="ticker-change">●</span></div>
+    <div class="ticker-item">🐟 <span>Ikan Lele</span> Rp22.000/kg <span class="ticker-change up">▲1.5%</span></div>
+    <div class="ticker-item">🥩 <span>Daging Sapi</span> Rp130.000/kg <span class="ticker-change down">▼0.3%</span></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="ticker-item">🌾 <span>Beras</span> Rp13.500/kg <span class="ticker-change up">▲1.2%</span></div>
+    <div class="ticker-item">🌽 <span>Jagung</span> Rp5.200/kg <span class="ticker-change">●</span></div>
+    <div class="ticker-item">🫘 <span>Kedelai</span> Rp9.800/kg <span class="ticker-change down">▼0.5%</span></div>
+    <div class="ticker-item">🧅 <span>Bawang Merah</span> Rp28.000/kg <span class="ticker-change up">▲3.7%</span></div>
+    <div class="ticker-item">🧄 <span>Bawang Putih</span> Rp36.000/kg <span class="ticker-change">●</span></div>
+    <div class="ticker-item">🌶️ <span>Cabai Merah</span> Rp42.000/kg <span class="ticker-change down">▼2.1%</span></div>
+    <div class="ticker-item">🥚 <span>Telur Ayam</span> Rp28.500/kg <span class="ticker-change up">▲0.8%</span></div>
+    <div class="ticker-item">🫙 <span>Minyak Goreng</span> Rp17.000/ltr <span class="ticker-change">●</span></div>
+    <div class="ticker-item">🐟 <span>Ikan Lele</span> Rp22.000/kg <span class="ticker-change up">▲1.5%</span></div>
+    <div class="ticker-item">🥩 <span>Daging Sapi</span> Rp130.000/kg <span class="ticker-change down">▼0.3%</span></div>
+  </div>
+</div>
+
+<!-- ─── PAGES ─── -->
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-content">
+      <div>
+        <div class="hero-badge"><i class="fa-solid fa-circle-check"></i> Portal Resmi Ketahanan Pangan</div>
+        <h1>Pantau Pangan Indonesia<br><span>Real-time & Akurat</span></h1>
+        <p>Data harga komoditas pangan, produksi pertanian, dan peta ketahanan pangan nasional — semua dalam satu platform terintegrasi untuk Indonesia yang berdaulat pangan.</p>
+        <div class="hero-btns">
+          <button class="btn-hero-primary" onclick="showPage('harga');setActiveNav('nav-harga')">Lihat Harga Hari Ini</button>
+          <button class="btn-hero-outline" onclick="openModal('register')">Daftar Gratis</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="hero-stat-num">38</div><div class="hero-stat-label">Provinsi Terpantau</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">120+</div><div class="hero-stat-label">Komoditas Pangan</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">1.200</div><div class="hero-stat-label">Pasar Dipantau</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">95%</div><div class="hero-stat-label">Ketersediaan Beras</div></div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <span class="hero-card-title">Harga Pangan — Live</span>
+            <div class="live-badge"><div class="live-dot"></div> Live</div>
+          </div>
+          <div class="price-list">
+            <div class="price-item"><div class="price-item-left"><span class="price-icon">🌾</span><span class="price-name">Beras Medium</span></div><div style="display:flex;align-items:center;gap:.5rem"><span class="price-val">Rp13.500</span><span class="price-change price-up">▲1.2%</span></div></div>
+            <div class="price-item"><div class="price-item-left"><span class="price-icon">🧅</span><span class="price-name">Bawang Merah</span></div><div style="display:flex;align-items:center;gap:.5rem"><span class="price-val">Rp28.000</span><span class="price-change price-up">▲3.7%</span></div></div>
+            <div class="price-item"><div class="price-item-left"><span class="price-icon">🌶️</span><span class="price-name">Cabai Merah</span></div><div style="display:flex;align-items:center;gap:.5rem"><span class="price-val">Rp42.000</span><span class="price-change price-down">▼2.1%</span></div></div>
+            <div class="price-item"><div class="price-item-left"><span class="price-icon">🥚</span><span class="price-name">Telur Ayam</span></div><div style="display:flex;align-items:center;gap:.5rem"><span class="price-val">Rp28.500</span><span class="price-change price-up">▲0.8%</span></div></div>
+            <div class="price-item"><div class="price-item-left"><span class="price-icon">🫙</span><span class="price-name">Minyak Goreng</span></div><div style="display:flex;align-items:center;gap:.5rem"><span class="price-val">Rp17.000</span><span class="price-change price-stable">● Stabil</span></div></div>
+            <div class="price-item"><div class="price-item-left"><span class="price-icon">🥩</span><span class="price-name">Daging Sapi</span></div><div style="display:flex;align-items:center;gap:.5rem"><span class="price-val">Rp130.000</span><span class="price-change price-down">▼0.3%</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <svg class="hero-wave" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 60L60 50C120 40 240 20 360 16.7C480 13.3 600 26.7 720 30C840 33.3 960 26.7 1080 23.3C1200 20 1320 20 1380 20L1440 20V60H1380C1320 60 1200 60 1080 60C960 60 840 60 720 60C600 60 480 60 360 60C240 60 120 60 60 60H0Z" fill="#f7f8f5"/></svg>
+  </div>
+
+  <!-- FITUR UTAMA -->
+  <div class="section">
+    <div class="section-label">Platform Terpadu</div>
+    <h2 class="section-title">Semua yang Anda butuhkan<br>untuk memantau pangan</h2>
+    <p class="section-sub">Dari harga pasar hingga peta ketahanan pangan, kami menyediakan data akurat untuk petani, pedagang, dan pembuat kebijakan.</p>
+    <div class="cards-grid">
+      <div class="card" onclick="showPage('harga');setActiveNav('nav-harga')">
+        <div class="card-icon">📈</div>
+        <h4>Harga Real-time</h4>
+        <p>Pantau pergerakan harga 120+ komoditas pangan dari 1.200 pasar tradisional dan modern di seluruh Indonesia.</p>
+        <div class="card-link">Lihat harga <i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="showPage('peta');setActiveNav('nav-peta')">
+        <div class="card-icon">🗺️</div>
+        <h4>Peta Ketahanan Pangan</h4>
+        <p>Visualisasi sebaran wilayah tahan, rentan, dan rawan pangan berdasarkan data BPS dan Kementan terkini.</p>
+        <div class="card-link">Lihat peta <i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="showPage('komoditas');setActiveNav('nav-komoditas')">
+        <div class="card-icon">🌾</div>
+        <h4>Profil Komoditas</h4>
+        <p>Detail lengkap tiap komoditas: harga historis, musim panen, sentra produksi, dan proyeksi ke depan.</p>
+        <div class="card-link">Jelajahi komoditas <i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+      <div class="card" onclick="requireLogin('dashboard')">
+        <div class="card-icon">🔔</div>
+        <h4>Notifikasi Harga</h4>
+        <p>Atur batas harga dan dapatkan notifikasi otomatis saat komoditas favorit Anda mencapai harga target. <span style="font-size:.75rem;color:var(--green-600)">(Login diperlukan)</span></p>
+        <div class="card-link">Atur notifikasi <i class="fa-solid fa-arrow-right"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INOVASI -->
+  <div style="background:white;padding:4rem 0;border-top:1px solid var(--gray-100)">
+    <div class="section" style="padding-top:0;padding-bottom:0">
+      <div class="section-label">Teknologi</div>
+      <h2 class="section-title">Inovasi Pertanian Modern</h2>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">🛰️</div><h4>Drone Pertanian</h4><p>Penyemprotan dan pemantauan lahan menggunakan drone secara efisien dan akurat.</p></div>
+        <div class="card"><div class="card-icon">📱</div><h4>Aplikasi Petani</h4><p>Akses informasi cuaca, harga pasar, dan kredit pertanian langsung dari smartphone.</p></div>
+        <div class="card"><div class="card-icon">🌡️</div><h4>Sensor IoT Lahan</h4><p>Pemantauan kelembaban tanah, suhu, dan nutrisi secara real-time berbasis IoT.</p></div>
+        <div class="card"><div class="card-icon">🧬</div><h4>Benih Unggul</h4><p>Varietas tahan kekeringan dan hama hasil riset Balitbangtan dan BRIN terkini.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HARGA PANGAN -->
+<div class="page" id="page-harga">
+  <div class="section">
+    <div class="section-label">Data Harga</div>
+    <h2 class="section-title">Harga Pangan Hari Ini</h2>
+    <p class="section-sub">Data diperbarui setiap hari dari pasar induk seluruh Indonesia · <span id="update-date"></span></p>
+    <div class="price-section">
+      <div class="price-section-header">
+        <h3>Daftar Harga Komoditas</h3>
+        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+          <div class="search-bar"><i class="fa-solid fa-search"></i><input type="text" placeholder="Cari komoditas..." oninput="filterTable(this.value)" id="search-input"></div>
+          <span class="price-updated" id="price-date-display">Diperbarui: 9 Jun 2026, 07:00 WIB</span>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="price-table" id="price-table">
+          <thead><tr><th>Komoditas</th><th>Harga</th><th>Perubahan</th><th>Tren 7 Hari</th><th>Stok</th></tr></thead>
+          <tbody id="price-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- KALKULATOR -->
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:2rem;margin-top:2rem">
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;color:var(--gray-800)">🧮 Kalkulator Belanja Pangan</h3>
+      <p style="font-size:.875rem;color:var(--gray-500);margin-bottom:1.5rem">Estimasi biaya belanja bulanan berdasarkan harga pasar saat ini</p>
+      <div id="calc-items" style="display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.25rem"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem;background:var(--green-50);border-radius:var(--radius-md);border:1px solid var(--green-200)">
+        <span style="font-size:.95rem;font-weight:600;color:var(--green-800)">Estimasi Total Bulanan</span>
+        <span style="font-size:1.3rem;font-weight:800;color:var(--green-700);font-family:'Plus Jakarta Sans',sans-serif" id="calc-total">Rp0</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KOMODITAS -->
+<div class="page" id="page-komoditas">
+  <div class="section">
+    <div class="section-label">Komoditas Pangan</div>
+    <h2 class="section-title">Profil Komoditas Nasional</h2>
+    <p class="section-sub">Pilih komoditas untuk melihat detail harga, produksi, dan sebaran wilayah sentra produksi.</p>
+    <div class="komoditas-grid" id="komoditas-grid"></div>
+    <div class="komoditas-detail hidden" id="komoditas-detail">
+      <div class="kd-header">
+        <div>
+          <div style="font-size:2.5rem" id="kd-emoji"></div>
+          <div class="kd-name" id="kd-name"></div>
+          <div style="font-size:.875rem;color:var(--gray-500);margin-top:.2rem" id="kd-desc"></div>
+        </div>
+        <div style="text-align:right">
+          <div class="kd-price" id="kd-price"></div>
+          <div style="font-size:.85rem;color:var(--gray-500)" id="kd-unit"></div>
+        </div>
+      </div>
+      <div class="kd-grid" id="kd-stats-grid"></div>
+      <div style="margin-top:1.5rem">
+        <h4 style="font-size:.9rem;font-weight:600;color:var(--gray-700);margin-bottom:.75rem">Sentra Produksi Utama</h4>
+        <div id="kd-provinces" style="display:flex;flex-wrap:wrap;gap:.5rem"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PETA -->
+<div class="page" id="page-peta">
+  <div class="section">
+    <div class="section-label">Peta Interaktif</div>
+    <h2 class="section-title">Peta Ketahanan Pangan Indonesia</h2>
+    <p class="section-sub">Sebaran kondisi ketahanan pangan per provinsi berdasarkan indeks komposit produksi, akses, dan pemanfaatan pangan.</p>
+    <div class="map-section">
+      <div class="map-header">
+        <h3>Peta Ketahanan Pangan — 2026</h3>
+        <div class="map-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div> Tahan Pangan</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div> Rentan</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div> Rawan Pangan</div>
+        </div>
+      </div>
+      <div class="map-body">
+        <div class="map-visual">
+          <svg class="map-svg" viewBox="0 0 500 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Simplified Indonesia silhouette -->
+            <rect width="500" height="280" fill="#e8f5e9" rx="8"/>
+            <!-- Sumatera -->
+            <ellipse cx="120" cy="140" rx="60" ry="90" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" transform="rotate(-30 120 140)"/>
+            <text x="90" y="145" font-size="9" fill="#166534" font-family="Inter" font-weight="500">Sumatera</text>
+            <!-- Jawa -->
+            <ellipse cx="230" cy="185" rx="80" ry="22" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" transform="rotate(-5 230 185)"/>
+            <text x="200" y="190" font-size="9" fill="#166534" font-family="Inter" font-weight="500">Jawa</text>
+            <!-- Kalimantan -->
+            <ellipse cx="290" cy="120" rx="65" ry="75" fill="#fef9c3" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="258" y="125" font-size="9" fill="#92400e" font-family="Inter" font-weight="500">Kalimantan</text>
+            <!-- Sulawesi -->
+            <ellipse cx="370" cy="130" rx="30" ry="60" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" transform="rotate(20 370 130)"/>
+            <text x="350" y="135" font-size="8" fill="#166534" font-family="Inter" font-weight="500">Sulawesi</text>
+            <!-- Papua -->
+            <ellipse cx="455" cy="150" rx="38" ry="50" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="432" y="155" font-size="9" fill="#991b1b" font-family="Inter" font-weight="500">Papua</text>
+            <!-- Bali+NTT -->
+            <ellipse cx="295" cy="200" rx="20" ry="10" fill="#fef9c3" stroke="#f59e0b" stroke-width="1.2"/>
+            <text x="278" y="206" font-size="8" fill="#92400e" font-family="Inter">Bali-NTT</text>
+            <!-- Maluku -->
+            <ellipse cx="415" cy="185" rx="20" ry="35" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2"/>
+            <text x="402" y="190" font-size="8" fill="#991b1b" font-family="Inter">Maluku</text>
+            <!-- Legend box -->
+            <rect x="10" y="10" width="130" height="75" rx="6" fill="rgba(255,255,255,0.85)" stroke="#e5e7eb" stroke-width="0.5"/>
+            <text x="18" y="26" font-size="9" font-weight="600" fill="#374151" font-family="Inter">Indeks Ketahanan Pangan</text>
+            <circle cx="22" cy="40" r="5" fill="#16a34a"/><text x="32" y="44" font-size="8.5" fill="#374151" font-family="Inter">Tahan (19 Prov.)</text>
+            <circle cx="22" cy="58" r="5" fill="#f59e0b"/><text x="32" y="62" font-size="8.5" fill="#374151" font-family="Inter">Rentan (10 Prov.)</text>
+            <circle cx="22" cy="76" r="5" fill="#dc2626"/><text x="32" y="80" font-size="8.5" fill="#374151" font-family="Inter">Rawan (9 Prov.)</text>
+          </svg>
+        </div>
+        <div class="map-stats">
+          <div class="map-stat-item">
+            <div class="map-stat-num green">19</div>
+            <div class="map-stat-label">Provinsi Tahan Pangan</div>
+            <div class="map-stat-bar"><div class="map-stat-fill" style="width:50%;background:var(--green-500)"></div></div>
+          </div>
+          <div class="map-stat-item">
+            <div class="map-stat-num yellow">10</div>
+            <div class="map-stat-label">Provinsi Rentan Pangan</div>
+            <div class="map-stat-bar"><div class="map-stat-fill" style="width:26%;background:#f59e0b"></div></div>
+          </div>
+          <div class="map-stat-item">
+            <div class="map-stat-num red">9</div>
+            <div class="map-stat-label">Provinsi Rawan Pangan</div>
+            <div class="map-stat-bar"><div class="map-stat-fill" style="width:24%;background:var(--red-500)"></div></div>
+          </div>
+          <hr style="border:none;border-top:1px solid var(--gray-100);margin:1rem 0">
+          <div style="font-size:.8rem;color:var(--gray-500);line-height:1.7">
+            <strong style="color:var(--gray-700)">Indikator:</strong><br>
+            • Produksi lokal<br>
+            • Akses pangan<br>
+            • Diversifikasi gizi<br>
+            • Kerawanan bencana
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Tabel Provinsi -->
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:1.5rem;margin-top:1.5rem">
+      <h3 style="font-size:1rem;font-weight:700;color:var(--gray-800);margin-bottom:1.25rem">Ringkasan Per Wilayah</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem" id="region-cards"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD (Login Required) -->
+<div class="page" id="page-dashboard">
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <div>
+        <div class="dashboard-title" id="dash-welcome">Dashboard</div>
+        <div class="dashboard-sub">Pantau komoditas favorit dan tren harga Anda</div>
+      </div>
+      <div style="display:flex;gap:.75rem">
+        <select style="padding:.5rem .9rem;border:1.5px solid var(--gray-200);border-radius:var(--radius-md);font-size:.875rem;font-family:inherit;color:var(--gray-700);background:white" onchange="updateDashboardPeriod(this.value)">
+          <option value="7">7 hari terakhir</option>
+          <option value="30">30 hari terakhir</option>
+          <option value="90">3 bulan terakhir</option>
+        </select>
+        <button class="btn-nav-fill" onclick="showToast('Laporan berhasil diunduh!','success')"><i class="fa-solid fa-download"></i> Ekspor</button>
+      </div>
+    </div>
+    <div class="dash-stats">
+      <div class="dash-stat"><div class="dash-stat-label">Komoditas Dipantau</div><div class="dash-stat-val" id="d-pantau">8</div><div class="dash-stat-change up"><i class="fa-solid fa-arrow-up"></i> 2 bulan ini</div></div>
+      <div class="dash-stat"><div class="dash-stat-label">Avg. Kenaikan Harga</div><div class="dash-stat-val" id="d-kenaikan">+1.4%</div><div class="dash-stat-change up">Dari pekan lalu</div></div>
+      <div class="dash-stat"><div class="dash-stat-label">Notifikasi Aktif</div><div class="dash-stat-val" id="d-notif">3</div><div class="dash-stat-change">Atur target harga</div></div>
+      <div class="dash-stat"><div class="dash-stat-label">Data Diperbarui</div><div class="dash-stat-val" style="font-size:1.1rem">Hari ini</div><div class="dash-stat-change">07:00 WIB</div></div>
+    </div>
+    <div class="dash-grid">
+      <div>
+        <div class="dash-panel">
+          <h3>Tren Harga Beras (7 Hari) <span>per kg</span></h3>
+          <div class="chart-area" id="dash-chart">
+            <svg class="chart-line-svg" viewBox="0 0 500 160" preserveAspectRatio="none">
+              <defs><linearGradient id="grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22c55e" stop-opacity=".25"/><stop offset="100%" stop-color="#22c55e" stop-opacity="0"/></linearGradient></defs>
+              <path d="M0,120 C50,110 100,100 150,95 C200,90 250,105 300,98 C350,91 400,80 450,70 L500,65" stroke="#22c55e" stroke-width="2.5" fill="none"/>
+              <path d="M0,120 C50,110 100,100 150,95 C200,90 250,105 300,98 C350,91 400,80 450,70 L500,65 L500,160 L0,160 Z" fill="url(#grad)"/>
+              <circle cx="0" cy="120" r="4" fill="#22c55e"/>
+              <circle cx="83" cy="105" r="4" fill="#22c55e"/>
+              <circle cx="166" cy="95" r="4" fill="#22c55e"/>
+              <circle cx="250" cy="100" r="4" fill="#22c55e"/>
+              <circle cx="333" cy="88" r="4" fill="#22c55e"/>
+              <circle cx="416" cy="76" r="4" fill="#22c55e"/>
+              <circle cx="500" cy="65" r="5" fill="#16a34a" stroke="white" stroke-width="2"/>
+            </svg>
+            <div style="position:absolute;bottom:8px;left:8px;right:8px;display:flex;justify-content:space-between;font-size:.72rem;color:var(--gray-400)">
+              <span>3 Jun</span><span>4 Jun</span><span>5 Jun</span><span>6 Jun</span><span>7 Jun</span><span>8 Jun</span><span>9 Jun</span>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:.75rem;padding:0 .25rem">
+            <div style="font-size:.8rem;color:var(--gray-500)">Terendah: <strong style="color:var(--gray-800)">Rp13.200</strong></div>
+            <div style="font-size:.8rem;color:var(--gray-500)">Tertinggi: <strong style="color:var(--gray-800)">Rp13.700</strong></div>
+            <div style="font-size:.8rem;color:var(--gray-500)">Sekarang: <strong style="color:var(--green-700)">Rp13.500</strong></div>
+          </div>
+        </div>
+        <div class="dash-panel" style="margin-top:1rem">
+          <h3>Berita Pangan Terkini <span>hari ini</span></h3>
+          <div class="news-list">
+            <div class="news-item"><div class="news-dot"></div><div><div class="news-title">Harga cabai merah turun di Jawa Tengah akibat panen raya</div><div class="news-meta">Kompas · 2 jam lalu</div></div></div>
+            <div class="news-item"><div class="news-dot"></div><div><div class="news-title">Kementan siapkan buffer stock beras jelang hari raya</div><div class="news-meta">Tempo · 4 jam lalu</div></div></div>
+            <div class="news-item"><div class="news-dot"></div><div><div class="news-title">Program subsidi pupuk diperluas ke 1.2 juta petani</div><div class="news-meta">Detik · 6 jam lalu</div></div></div>
+            <div class="news-item"><div class="news-dot"></div><div><div class="news-title">Produksi kedelai lokal naik 12% dibanding tahun lalu</div><div class="news-meta">Bisnis · 8 jam lalu</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="dash-panel">
+          <h3>Watchlist Komoditas</h3>
+          <div class="watchlist" id="watchlist-items"></div>
+          <button class="add-watch-btn" onclick="addToWatchlist()"><i class="fa-solid fa-plus"></i> Tambah komoditas</button>
+        </div>
+        <div class="dash-panel" style="margin-top:1rem">
+          <h3>Notifikasi Harga</h3>
+          <div id="alert-list" style="display:flex;flex-direction:column;gap:.6rem"></div>
+          <button class="add-watch-btn" style="margin-top:.75rem" onclick="addPriceAlert()"><i class="fa-solid fa-bell"></i> Tambah notifikasi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand"><div class="footer-brand-icon">🌾</div> Swasembada.id</div>
+        <p class="footer-desc">Portal informasi ketahanan pangan terpercaya untuk masyarakat, petani, dan pemangku kebijakan di Indonesia.</p>
+        <div class="footer-social" style="margin-top:1rem">
+          <a href="#"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Navigasi</h4><a onclick="showPage('home')">Beranda</a><a onclick="showPage('harga')">Harga Pangan</a><a onclick="showPage('komoditas')">Komoditas</a><a onclick="showPage('peta')">Peta Ketahanan</a></div>
+      <div class="footer-col"><h4>Sumber Data</h4><a>BPS Indonesia</a><a>Kementerian Pertanian</a><a>Bulog</a><a>Panel Harga Pangan</a></div>
+      <div class="footer-col"><h4>Tentang</h4><a>Tentang Kami</a><a>Metodologi</a><a>API Data</a><a>Kontak</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Swasembada.id — Ketahanan Pangan Indonesia</span>
+      <span>Data diperbarui setiap hari pukul 07:00 WIB</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── DATA ───
+const COMMODITIES = [
+  {id:'beras',emoji:'🌾',name:'Beras Medium',price:13500,unit:'kg',change:1.2,trend:'up',stock:85,desc:'Komoditas pangan pokok utama Indonesia',provinces:['Jawa Tengah','Jawa Barat','Jawa Timur','Sulawesi Selatan','Sumatera Selatan'],produksi:'32 juta ton/tahun',musim:'Mar–Apr, Sep–Oct',surplus:'+2.4 juta ton'},
+  {id:'jagung',emoji:'🌽',name:'Jagung',price:5200,unit:'kg',change:0,trend:'stable',stock:72,desc:'Bahan baku pakan ternak dan industri makanan',provinces:['Jawa Timur','NTB','Lampung','Sulawesi Selatan'],produksi:'18 juta ton/tahun',musim:'Feb–Mar, Jul–Agt',surplus:'+1.1 juta ton'},
+  {id:'kedelai',emoji:'🫘',name:'Kedelai',price:9800,unit:'kg',change:-0.5,trend:'down',stock:45,desc:'Bahan baku tahu, tempe, dan kecap',provinces:['Jawa Timur','Jawa Tengah','NTT'],produksi:'0.9 juta ton/tahun',musim:'Apr–Mei, Sep–Okt',surplus:'-1.2 juta ton (impor)'},
+  {id:'bawang_merah',emoji:'🧅',name:'Bawang Merah',price:28000,unit:'kg',change:3.7,trend:'up',stock:60,desc:'Bumbu dapur utama dengan harga fluktuatif tinggi',provinces:['Jawa Tengah','Jawa Barat','Sumatera Utara'],produksi:'1.8 juta ton/tahun',musim:'Mei–Jun, Nov–Des',surplus:'+0.2 juta ton'},
+  {id:'bawang_putih',emoji:'🧄',name:'Bawang Putih',price:36000,unit:'kg',change:0,trend:'stable',stock:30,desc:'Sebagian besar masih impor dari Tiongkok',provinces:['Jawa Tengah','Jawa Timur','NTB'],produksi:'0.1 juta ton/tahun',musim:'Mei–Jul',surplus:'-0.4 juta ton (impor)'},
+  {id:'cabai',emoji:'🌶️',name:'Cabai Merah',price:42000,unit:'kg',change:-2.1,trend:'down',stock:55,desc:'Komoditas dengan volatilitas harga tertinggi',provinces:['Jawa Tengah','Jawa Barat','Sumatera Utara','Sulawesi Utara'],produksi:'2.1 juta ton/tahun',musim:'Sepanjang tahun',surplus:'+0.3 juta ton'},
+  {id:'telur',emoji:'🥚',name:'Telur Ayam',price:28500,unit:'kg',change:0.8,trend:'up',stock:90,desc:'Sumber protein hewani terjangkau',provinces:['Jawa Timur','Jawa Tengah','Jawa Barat'],produksi:'5.6 juta ton/tahun',musim:'Sepanjang tahun',surplus:'+0.5 juta ton'},
+  {id:'minyak',emoji:'🫙',name:'Minyak Goreng',price:17000,unit:'liter',change:0,trend:'stable',stock:95,desc:'Berbasis minyak sawit, Indonesia adalah produsen terbesar',provinces:['Riau','Kalimantan Tengah','Sumatera Utara','Kalimantan Timur'],produksi:'47 juta ton CPO/tahun',musim:'Sepanjang tahun',surplus:'+35 juta ton (ekspor)'},
+  {id:'daging',emoji:'🥩',name:'Daging Sapi',price:130000,unit:'kg',change:-0.3,trend:'down',stock:65,desc:'Harga tertinggi di antara protein hewani utama',provinces:['Jawa Timur','Jawa Tengah','NTT','Sulawesi Selatan'],produksi:'0.5 juta ton/tahun',musim:'Lebaran, Idul Adha',surplus:'-0.1 juta ton (impor)'},
+  {id:'ikan',emoji:'🐟',name:'Ikan Lele',price:22000,unit:'kg',change:1.5,trend:'up',stock:80,desc:'Ikan budidaya air tawar paling populer',provinces:['Jawa Barat','Jawa Tengah','Jawa Timur'],produksi:'1.2 juta ton/tahun',musim:'Sepanjang tahun',surplus:'+0.4 juta ton'},
+];
+
+const REGIONS = [
+  {name:'Jawa & Bali',status:'tahan',score:78,provinces:6,color:'#16a34a'},
+  {name:'Sumatera',status:'rentan',score:62,provinces:10,color:'#f59e0b'},
+  {name:'Kalimantan',status:'tahan',score:71,provinces:5,color:'#16a34a'},
+  {name:'Sulawesi',status:'tahan',score:69,provinces:6,color:'#16a34a'},
+  {name:'Nusa Tenggara',status:'rentan',score:55,provinces:3,color:'#f59e0b'},
+  {name:'Maluku',status:'rawan',score:44,provinces:2,color:'#dc2626'},
+  {name:'Papua',status:'rawan',score:38,provinces:2,color:'#dc2626'},
+];
+
+// ─── STATE ───
+let currentUser = null;
+let watchlist = ['beras','telur','cabai','minyak'];
+let priceAlerts = [
+  {id:'beras',emoji:'🌾',name:'Beras',target:14000,condition:'above'},
+  {id:'cabai',emoji:'🌶️',name:'Cabai',target:50000,condition:'above'},
+  {id:'bawang_merah',emoji:'🧅',name:'Bawang Merah',target:30000,condition:'above'},
+];
+
+// ─── AUTH ───
+function openModal(type){
+  document.getElementById('modal-auth').classList.remove('hidden');
+  if(type==='register'){switchToRegister()}else{switchToLogin()}
+  document.getElementById('modal-auth').addEventListener('click',function(e){if(e.target===this)closeModal()},{once:true});
+}
+function closeModal(){document.getElementById('modal-auth').classList.add('hidden')}
+function switchToLogin(){document.getElementById('form-login').classList.remove('hidden');document.getElementById('form-register').classList.add('hidden')}
+function switchToRegister(){document.getElementById('form-register').classList.remove('hidden');document.getElementById('form-login').classList.add('hidden')}
+
+function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pass=document.getElementById('login-pass').value;
+  let valid=true;
+  clearErrors('login');
+  if(!email||!email.includes('@')){showError('login-email-err','Masukkan email yang valid');document.getElementById('login-email').classList.add('error');valid=false}
+  if(!pass||pass.length<6){showError('login-pass-err','Kata sandi minimal 6 karakter');document.getElementById('login-pass').classList.add('error');valid=false}
+  if(!valid)return;
+  // Simulate auth
+  const users=JSON.parse(localStorage.getItem('swasembada_users')||'[]');
+  const user=users.find(u=>u.email===email&&u.pass===pass);
+  if(!user){showAlert('login-alert','error','Email atau kata sandi salah. Coba akun demo di bawah.');return}
+  loginSuccess(user);
+}
+
+function doRegister(){
+  const name=document.getElementById('reg-name').value.trim();
+  const email=document.getElementById('reg-email').value.trim();
+  const pass=document.getElementById('reg-pass').value;
+  const role=document.getElementById('reg-role').value;
+  let valid=true;
+  clearErrors('register');
+  if(!name){showError('reg-name-err','Nama lengkap wajib diisi');document.getElementById('reg-name').classList.add('error');valid=false}
+  if(!email||!email.includes('@')){showError('reg-email-err','Masukkan email yang valid');document.getElementById('reg-email').classList.add('error');valid=false}
+  if(!pass||pass.length<8){showError('reg-pass-err','Kata sandi minimal 8 karakter');document.getElementById('reg-pass').classList.add('error');valid=false}
+  if(!valid)return;
+  const users=JSON.parse(localStorage.getItem('swasembada_users')||'[]');
+  if(users.find(u=>u.email===email)){showAlert('register-alert','error','Email sudah terdaftar. Silakan masuk.');return}
+  const user={name,email,pass,role,joinDate:new Date().toLocaleDateString('id-ID')};
+  users.push(user);
+  localStorage.setItem('swasembada_users',JSON.stringify(users));
+  loginSuccess(user);
+}
+
+function demoLogin(){
+  loginSuccess({name:'Demo User',email:'demo@swasembada.id',role:'umum',joinDate:'Jan 2026'});
+}
+
+function loginSuccess(user){
+  currentUser=user;
+  closeModal();
+  document.getElementById('nav-guest').classList.add('hidden');
+  document.getElementById('nav-user').classList.remove('hidden');
+  const initials=user.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('user-avatar-nav').textContent=initials;
+  document.getElementById('user-name-nav').textContent=user.name.split(' ')[0];
+  document.getElementById('dash-welcome').textContent='Halo, '+user.name.split(' ')[0]+' 👋';
+  showToast('Selamat datang, '+user.name.split(' ')[0]+'!','success');
+}
+
+function doLogout(){
+  currentUser=null;
+  document.getElementById('nav-guest').classList.remove('hidden');
+  document.getElementById('nav-user').classList.add('hidden');
+  document.getElementById('user-dropdown').classList.add('hidden');
+  showPage('home');setActiveNav('nav-beranda');
+  showToast('Berhasil keluar. Sampai jumpa!','info');
+}
+
+function requireLogin(page){
+  if(!currentUser){openModal('login');showToast('Login diperlukan untuk mengakses fitur ini','info');return}
+  showPage(page);setActiveNav('nav-beranda');
+}
+
+function clearErrors(prefix){
+  document.querySelectorAll('.form-error').forEach(el=>{el.classList.add('hidden');el.textContent=''});
+  document.querySelectorAll('.form-group input').forEach(el=>el.classList.remove('error'));
+  const alertId=prefix==='login'?'login-alert':'register-alert';
+  document.getElementById(alertId).classList.add('hidden');
+}
+function showError(id,msg){const el=document.getElementById(id);el.textContent=msg;el.classList.remove('hidden')}
+function showAlert(id,type,msg){
+  const el=document.getElementById(id);
+  el.className='alert alert-'+type;
+  el.textContent=msg;
+  el.classList.remove('hidden');
+}
+function toggleUserMenu(){
+  const dd=document.getElementById('user-dropdown');
+  dd.classList.toggle('hidden');
+  document.addEventListener('click',function closeDD(e){if(!e.target.closest('.user-menu-wrap')){dd.classList.add('hidden');document.removeEventListener('click',closeDD)}},{once:true});
+}
+
+// ─── NAVIGATION ───
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(name==='dashboard'&&!currentUser){openModal('login');document.getElementById('page-home').classList.add('active');return}
+  window.scrollTo(0,0);
+  if(name==='dashboard')renderDashboard();
+  if(name==='komoditas')renderKomoditas();
+  if(name==='peta')renderRegions();
+  if(name==='harga')renderPriceTable();
+}
+function setActiveNav(id){
+  document.querySelectorAll('.nav-link').forEach(el=>el.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el)el.classList.add('active');
+}
+
+// ─── PRICE TABLE ───
+function renderPriceTable(){
+  const today=new Date();
+  document.getElementById('price-date-display').textContent='Diperbarui: '+today.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})+', 07:00 WIB';
+  const tbody=document.getElementById('price-tbody');
+  tbody.innerHTML=COMMODITIES.map(c=>{
+    const trendW=30+Math.floor(Math.random()*55);
+    const stockColor=c.stock>70?'#16a34a':c.stock>50?'#f59e0b':'#dc2626';
+    const chgClass=c.change>0?'change-up':c.change<0?'change-down':'change-neutral';
+    const chgText=c.change>0?'▲'+c.change+'%':c.change<0?'▼'+Math.abs(c.change)+'%':'● Stabil';
+    return`<tr>
+      <td><div class="commodity-cell"><span class="commodity-emoji">${c.emoji}</span><div><div class="commodity-name">${c.name}</div><div class="commodity-unit">per ${c.unit}</div></div></div></td>
+      <td class="price-cell">Rp${c.price.toLocaleString('id-ID')}</td>
+      <td><span class="change-badge ${chgClass}">${chgText}</span></td>
+      <td><div class="trend-bar"><div class="trend-fill" style="width:${trendW}%"></div></div></td>
+      <td><span style="font-size:.8rem;font-weight:600;color:${stockColor}">${c.stock}%</span></td>
+    </tr>`;
+  }).join('');
+  renderCalculator();
+}
+function filterTable(q){
+  const rows=document.querySelectorAll('#price-tbody tr');
+  rows.forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(q.toLowerCase())?'':'none'});
+}
+
+// ─── CALCULATOR ───
+function renderCalculator(){
+  const items=[
+    {emoji:'🌾',name:'Beras',id:'beras',qty:10},
+    {emoji:'🥚',name:'Telur',id:'telur',qty:2},
+    {emoji:'🫙',name:'Minyak Goreng',id:'minyak',qty:2},
+    {emoji:'🧅',name:'Bawang Merah',id:'bawang_merah',qty:0.5},
+  ];
+  const container=document.getElementById('calc-items');
+  container.innerHTML=items.map(item=>{
+    const c=COMMODITIES.find(x=>x.id===item.id);
+    return`<div style="display:flex;align-items:center;justify-content:space-between;padding:.65rem .9rem;background:var(--gray-50);border-radius:var(--radius-md)">
+      <div style="display:flex;align-items:center;gap:.6rem"><span style="font-size:1.1rem">${item.emoji}</span><span style="font-size:.875rem;font-weight:500;color:var(--gray-700)">${item.name}</span></div>
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <span style="font-size:.78rem;color:var(--gray-400)">Rp${c.price.toLocaleString('id-ID')}/${c.unit}</span>
+        <div style="display:flex;align-items:center;gap:.35rem">
+          <button onclick="calcAdj('${item.id}',this,-1)" style="width:26px;height:26px;border-radius:50%;border:1px solid var(--gray-200);background:white;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;color:var(--gray-600)">−</button>
+          <span id="calc-qty-${item.id}" style="font-size:.875rem;font-weight:600;min-width:30px;text-align:center">${item.qty}</span>
+          <button onclick="calcAdj('${item.id}',this,1)" style="width:26px;height:26px;border-radius:50%;border:1px solid var(--gray-200);background:white;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;color:var(--gray-600)">+</button>
+        </div>
+        <span id="calc-sub-${item.id}" style="font-size:.875rem;font-weight:600;color:var(--green-700);min-width:80px;text-align:right">Rp${(c.price*item.qty*30).toLocaleString('id-ID')}</span>
+      </div>
+    </div>`;
+  }).join('');
+  calcTotal();
+}
+const calcState={beras:10,telur:2,minyak:2,bawang_merah:0.5};
+function calcAdj(id,btn,dir){
+  const step=id==='bawang_merah'?0.5:1;
+  calcState[id]=Math.max(0,calcState[id]+dir*step);
+  document.getElementById('calc-qty-'+id).textContent=calcState[id];
+  const c=COMMODITIES.find(x=>x.id===id);
+  document.getElementById('calc-sub-'+id).textContent='Rp'+(c.price*calcState[id]*30).toLocaleString('id-ID');
+  calcTotal();
+}
+function calcTotal(){
+  let total=0;
+  ['beras','telur','minyak','bawang_merah'].forEach(id=>{
+    const c=COMMODITIES.find(x=>x.id===id);
+    total+=c.price*calcState[id]*30;
+  });
+  document.getElementById('calc-total').textContent='Rp'+total.toLocaleString('id-ID');
+}
+
+// ─── KOMODITAS ───
+function renderKomoditas(){
+  document.getElementById('komoditas-grid').innerHTML=COMMODITIES.map(c=>{
+    const chgClass=c.change>0?'change-up':c.change<0?'change-down':'change-neutral';
+    const chgText=c.change>0?'▲'+c.change+'%':c.change<0?'▼'+Math.abs(c.change)+'%':'Stabil';
+    return`<div class="komoditas-card" onclick="showKomoditas('${c.id}')">
+      <div class="komoditas-emoji">${c.emoji}</div>
+      <div class="komoditas-name">${c.name}</div>
+      <div class="komoditas-price">Rp${c.price.toLocaleString('id-ID')}</div>
+      <div class="komoditas-change"><span class="change-badge ${chgClass}" style="font-size:.75rem">${chgText}</span></div>
+    </div>`;
+  }).join('');
+  document.getElementById('komoditas-detail').classList.add('hidden');
+}
+function showKomoditas(id){
+  const c=COMMODITIES.find(x=>x.id===id);
+  document.querySelectorAll('.komoditas-card').forEach((el,i)=>{el.classList.toggle('selected',COMMODITIES[i].id===id)});
+  document.getElementById('kd-emoji').textContent=c.emoji;
+  document.getElementById('kd-name').textContent=c.name;
+  document.getElementById('kd-desc').textContent=c.desc;
+  document.getElementById('kd-price').textContent='Rp'+c.price.toLocaleString('id-ID');
+  document.getElementById('kd-unit').textContent='per '+c.unit;
+  document.getElementById('kd-stats-grid').innerHTML=`
+    <div class="kd-stat"><div class="kd-stat-label">Produksi</div><div class="kd-stat-val">${c.produksi}</div></div>
+    <div class="kd-stat"><div class="kd-stat-label">Musim Panen</div><div class="kd-stat-val">${c.musim}</div></div>
+    <div class="kd-stat"><div class="kd-stat-label">Surplus/Defisit</div><div class="kd-stat-val" style="color:${c.surplus.startsWith('+')? 'var(--green-700)':'var(--red-600)'}">${c.surplus}</div></div>
+  `;
+  document.getElementById('kd-provinces').innerHTML=c.provinces.map(p=>`<span style="padding:.25rem .75rem;background:var(--green-50);border:1px solid var(--green-200);border-radius:100px;font-size:.8rem;color:var(--green-800)">${p}</span>`).join('');
+  const detail=document.getElementById('komoditas-detail');
+  detail.classList.remove('hidden');
+  detail.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ─── PETA REGIONS ───
+function renderRegions(){
+  document.getElementById('region-cards').innerHTML=REGIONS.map(r=>`
+    <div style="background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:1rem;border-top:3px solid ${r.color}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+        <div style="font-size:.9rem;font-weight:600;color:var(--gray-800)">${r.name}</div>
+        <span style="font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:100px;background:${r.color}20;color:${r.color};text-transform:capitalize">${r.status}</span>
+      </div>
+      <div style="font-size:1.4rem;font-weight:800;color:${r.color};font-family:'Plus Jakarta Sans',sans-serif">${r.score}<span style="font-size:.8rem;font-weight:400;color:var(--gray-400)">/100</span></div>
+      <div style="font-size:.78rem;color:var(--gray-400);margin-top:.2rem">${r.provinces} provinsi</div>
+      <div style="height:4px;background:var(--gray-100);border-radius:2px;margin-top:.75rem;overflow:hidden"><div style="height:100%;width:${r.score}%;background:${r.color};border-radius:2px"></div></div>
+    </div>
+  `).join('');
+}
+
+// ─── DASHBOARD ───
+function renderDashboard(){
+  const wl=document.getElementById('watchlist-items');
+  wl.innerHTML=watchlist.map(id=>{
+    const c=COMMODITIES.find(x=>x.id===id);
+    const chgClass=c.change>0?'up':c.change<0?'down':'';
+    const chgText=c.change>0?'+'+c.change+'%':c.change<0?c.change+'%':'Stabil';
+    return`<div class="watch-item"><div style="display:flex;align-items:center;gap:.5rem"><span style="font-size:1.1rem">${c.emoji}</span><span class="watch-name">${c.name}</span></div><div style="display:flex;align-items:center;gap:.5rem"><span class="watch-price">Rp${c.price.toLocaleString('id-ID')}</span><span class="watch-chg ${chgClass}">${chgText}</span></div></div>`;
+  }).join('');
+  const al=document.getElementById('alert-list');
+  al.innerHTML=priceAlerts.map(a=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:.6rem .75rem;background:var(--gray-50);border-radius:var(--radius-md);border:1px solid var(--gray-100)">
+      <div style="display:flex;align-items:center;gap:.5rem"><span>${a.emoji}</span><div><div style="font-size:.83rem;font-weight:500;color:var(--gray-700)">${a.name}</div><div style="font-size:.73rem;color:var(--gray-400)">${a.condition==='above'?'Jika >':'Jika <'} Rp${a.target.toLocaleString('id-ID')}</div></div></div>
+      <span style="font-size:.72rem;padding:.15rem .45rem;background:#dcfce7;color:#16a34a;border-radius:4px;font-weight:600">Aktif</span>
+    </div>
+  `).join('');
+}
+function addToWatchlist(){
+  const options=COMMODITIES.filter(c=>!watchlist.includes(c.id));
+  if(!options.length){showToast('Semua komoditas sudah ada di watchlist','info');return}
+  const pick=options[Math.floor(Math.random()*options.length)];
+  watchlist.push(pick.id);
+  renderDashboard();
+  document.getElementById('d-pantau').textContent=watchlist.length;
+  showToast(pick.emoji+' '+pick.name+' ditambahkan ke watchlist','success');
+}
+function addPriceAlert(){showToast('Fitur notifikasi akan segera hadir!','info')}
+function updateDashboardPeriod(v){showToast('Menampilkan data '+v+' hari terakhir','success')}
+
+// ─── TOAST ───
+function showToast(msg,type='success'){
+  const icon=type==='success'?'fa-check-circle':type==='error'?'fa-circle-xmark':'fa-circle-info';
+  const t=document.createElement('div');
+  t.className='toast'+(type==='error'?' error':'');
+  t.innerHTML=`<i class="fa-solid ${icon}"></i> ${msg}`;
+  document.body.appendChild(t);
+  setTimeout(()=>{t.classList.add('fadeOut');setTimeout(()=>t.remove(),300)},3000);
+}
+
+// ─── INIT ───
+function init(){
+  const d=new Date();
+  const months=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  if(document.getElementById('update-date'))document.getElementById('update-date').textContent=d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
+  renderPriceTable();
+  renderKomoditas();
+  renderRegions();
+  // Try restore session
+  const savedUser=sessionStorage.getItem('sw_user');
+  if(savedUser){try{loginSuccess(JSON.parse(savedUser))}catch(e){}}
+}
+init();
+</script>
+</body>
+</html>
